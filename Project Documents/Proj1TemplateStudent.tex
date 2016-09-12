@@ -1,0 +1,124 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{amsmath,amsfonts,amstext,amssymb,amsbsy,amsopn,amsthm,eucal}
+%%\usepackaige{natbib}
+\usepackage{url}
+\usepackage{colortbl}
+\usepackage{hyperref} 
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+
+	\textsc{\LARGE Linear Statistical Models}\\[1cm]
+	\textsc{\Large SYS 4021}\\[0.5cm]
+
+\HRule \\[0.4cm]
+% Title
+\text{\LARGE Project 1}\\[0.5cm]
+\text{\Large Analysis of Train Accidents in the U.S. During 2001-2015}\\[0.5cm]
+\HRule \\[1.5cm]
+
+% Author and supervisor
+	\begin{minipage}{0.4\textwidth}
+	\begin{center} \large
+	Laura E. \textsc{Barnes}\\
+	lbarnes@virginia.edu
+	\end{center}
+	\end{minipage}
+		\begin{minipage}{0.4\textwidth}
+	\begin{center} \large
+	Author \textsc{Two}\\
+	author2@virginia.edu
+	\end{center}
+	\end{minipage}
+		\vspace{1.5cm}
+
+
+\section*{Summary}\label{section:summary}
+
+\colorbox{yellow}{\parbox{5 in}{Insert the summary of your recommendation(s) supported by evidence. Your summary must include a statement of statistical confidence in the evidence. The total length of your summary should be less than 500 words.}}\\[0.5cm]
+
+{\parbox{5 in}{\textit{Honor Pledge:} On my honor, I pledge that I am the sole author of this paper and I have accurately cited all help and references used in its completion.}}
+
+\colorbox{yellow}{\parbox{5 in}{You must include this honor pledge with your submission.}}
+
+\vfill
+
+
+\end{center}
+
+\end{titlepage}
+
+\section{Problem Description}\label{section:prob}
+
+\subsection{Situation}
+
+\noindent \colorbox{yellow}{\parbox{5 in}{Provide a summary of the current safety situation as the context for your analysis.  Include graphics and tables that provide information about the extent and characteristics of the problem. At a minimum you should reference the assignment ~\cite{proj1assign} and this template~\cite{proj1template}.}}
+
+\subsection{Goal}\label{subsec:goal}
+
+\colorbox{yellow}{\parbox{5 in}{Write the goal of this study. If you want you can decompose the goal into subgoals and objectives.}}
+
+\subsection{Metrics}\label{subsec:metrics}
+
+\colorbox{yellow}{\parbox{5 in}{Give the quantitative measures of performance against the goals.}}
+
+\subsection{Hypothesis(es)}\label{subsec:hypoth}
+
+\colorbox{yellow}{Write at least one well-formed hypothesis for each goal.}
+
+\section{Approach} \label{sec:approach}
+
+\subsection{Data}\label{subsec:data}
+
+\noindent\colorbox{yellow}{\parbox{5 in}{Follow the guidance given in class about documenting the data you used for this analysis. Be sure to cite the sources of the data you used in this study~\cite{FRA}. Also indicate any missing data or biases you observed. Explain your actions to correct
+for missing data or bias.}}
+
+\subsection{Analysis} \label{subsec:analysis}
+
+
+\colorbox{yellow}{\parbox{5 in}{
+Describe the analysis techniques and modeling approaches you applied to this problem. At a minimum this should include the following:
+
+\begin{itemize}
+\item The linear models you used to provide evidence;
+\item The feature and model selection techniques you used to find appropriate models for this problem;
+\item Your treatment of ordinal and categorical variables (i.e., how were they coded);
+\item How you assessed your models (e.g., adjusted $R^{2}$, AIC, etc.);
+\item How you diagnosed problems with the models; and
+\item How you adjusted the models based on these assessments.
+\end{itemize}
+}}
+
+
+\section{Evidence}\label{sec:evid}
+
+\colorbox{yellow}{\parbox{5 in}{How do you answer the questions posed your goal and hypotheses? What evidence do you have that support your answer? In particular, describe your results from the application of the methods in ~\ref{subsec:analysis} to the data in ~\ref{subsec:data} to produce evidence for testing the hypothesis(es) in ~\ref{subsec:hypoth}. These results should answer the question posed by the problem in ~\ref{subsec:goal}. You should also formally describe your confidence in the results using confidence intervals.}}
+
+
+\section{Recommendation}
+\colorbox{yellow}{\parbox{5 in}{Summarize your finding and your recommendations for safety improvements based on the evidence you have discovered. Be sure to back-up your recommendations with formal measures of confidence (i.e., confidence intervals), model validity (e.g.,
+adjusted $R^{2}$) and possibly visual displays. You do need to repeat your results or graphics in this section. Instead you can summarize them and refer the reader to the appropriate sections, tables, or figures.)
+}}
+
+\section{References}
+\renewcommand\refname{} 
+\bibliographystyle{IEEEtran}
+\bibliography{proj1}
+
+\appendix
+\section{Optional Appendices}
+
+\end{document}
