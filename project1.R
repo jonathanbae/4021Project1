@@ -3,9 +3,9 @@ setwd("~/School/Fall 2016/SYS 4021/Data/Train Data")
 source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/AccidentInput.R")
 path <- "D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/Data/Train Data"
 #Thomas Harrison
-setwd("")
-source("")
-path <- ""
+setwd("/Users/ThomasHarrison/Desktop/SYS 4021/Data")
+source("/Users/ThomasHarrison/Desktop/SYS 4021/Code/AccidentInput.R")
+path <- "/Users/ThomasHarrison/Desktop/SYS 4021/Data"
 #Zach Calhoun -- I sourced everything
 setwd("C:/Users/Student/Desktop/Fall 2016/SYS 4021/Univariate")
 source("AccidentInput.R")
