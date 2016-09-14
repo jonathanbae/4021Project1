@@ -39,3 +39,57 @@ dim(totactsnd)
 
 dmgbox <- boxplot(totacts$ACCDMG)
 xdmg <- totacts[totacts$ACCDMG > dmgbox$stats[5],]
+
+#Not sure if this is necessary
+rownames(xdmg) <- NULL
+
+#############################
+#
+#   Look at causes better
+#
+#############################
+
+totactsnd$Cause <- rep(NA, nrow(totactsnd))
+
+totactsnd$Cause[which(substr(totactsnd$CAUSE, 1, 1) == "M")] <- "M"
+totactsnd$Cause[which(substr(totactsnd$CAUSE, 1, 1) == "T")] <- "T"
+totactsnd$Cause[which(substr(totactsnd$CAUSE, 1, 1) == "S")] <- "S"
+totactsnd$Cause[which(substr(totactsnd$CAUSE, 1, 1) == "H")] <- "H"
+totactsnd$Cause[which(substr(totactsnd$CAUSE, 1, 1) == "E")] <- "E"
+
+# This new variable, Cause, has to be a factor
+
+totactsnd$Cause <- factor(totactsnd$Cause)
+
+table(totactsnd$Cause)
+
+##DOES THE SAME FOR xdmg
+xdmg$Cause <- rep(NA, nrow(xdmg))
+
+xdmg$Cause[which(substr(xdmg$CAUSE, 1, 1) == "M")] <- "M"
+xdmg$Cause[which(substr(xdmg$CAUSE, 1, 1) == "T")] <- "T"
+xdmg$Cause[which(substr(xdmg$CAUSE, 1, 1) == "S")] <- "S"
+xdmg$Cause[which(substr(xdmg$CAUSE, 1, 1) == "H")] <- "H"
+xdmg$Cause[which(substr(xdmg$CAUSE, 1, 1) == "E")] <- "E"
+
+# This new variable, Cause, has to be a factor
+
+xdmg$Cause <- factor(xdmg$Cause)
+
+table(xdmg$Cause)
+
+#############################
+#
+#   Let's determine which response variables correlate with ACCDMG
+# NOT SURE IF THE BELOW IS CORRECT -- I HAVE HAD ISSUES
+#############################
+
+xdmg.lm1<-lm(ACCDMG~.,data=xdmg[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
+##                                   ,'LOADF1','TIMEHR','LOADP1','EQPDMG'
+  #                                 ,'TRKDMG','ENGHR','CDTRHR')])
+
+#Stepwise will decide which response variables demonstrate promise.
+#WARNING: May take a while to look at all combinations.
+xdmg.lm1.step<-step(xdmg.lm1, trace = F)
+summary(xdmg.lm1)
+summary(xdmg.lm1.step)
