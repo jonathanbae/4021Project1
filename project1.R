@@ -28,6 +28,9 @@ dim(totacts)
 #############################
 
 dim(totacts)
+####
+#Create a Casualty variable (TOTINJ+TOTKLD)
+totacts$Casualty <- totacts$TOTKLD + totacts$TOTINJ
 totactsnd <- totacts[!(duplicated(totacts[, c("INCDTNO", "YEAR", "MONTH", "DAY", "TIMEHR", "TIMEMIN")])),]
 dim(totactsnd)
 
@@ -93,3 +96,5 @@ xdmg.lm1<-lm(ACCDMG~.,data=xdmg[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
 xdmg.lm1.step<-step(xdmg.lm1, trace = F)
 summary(xdmg.lm1)
 summary(xdmg.lm1.step)
+
+
