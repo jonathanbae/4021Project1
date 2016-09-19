@@ -1,6 +1,8 @@
 #Jonathan Bae
 setwd("~/School/Fall 2016/SYS 4021/Data/Train Data")
 source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/AccidentInput.R")
+source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/PCAplots.R")
+source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/SPM_Panel.R")
 path <- "D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/Data/Train Data"
 #Thomas Harrison
 setwd("/Users/ThomasHarrison/Desktop/SYS 4021/Data")
@@ -23,14 +25,23 @@ dim(totacts)
 
 #############################
 #ZC
-#   Remove duplicates to clean data
+#   Remove duplicates to clean data, create cause variable so no repeaat, create casualty variable
 #
 #############################
 
-dim(totacts)
 ####
 #Create a Casualty variable (TOTINJ+TOTKLD)
 totacts$Casualty <- totacts$TOTKLD + totacts$TOTINJ
+
+totacts$Cause <- rep(NA, nrow(totacts))
+totacts$Cause[which(substr(totacts$CAUSE, 1, 1) == "M")] <- "M"
+totacts$Cause[which(substr(totacts$CAUSE, 1, 1) == "T")] <- "T"
+totacts$Cause[which(substr(totacts$CAUSE, 1, 1) == "S")] <- "S"
+totacts$Cause[which(substr(totacts$CAUSE, 1, 1) == "H")] <- "H"
+totacts$Cause[which(substr(totacts$CAUSE, 1, 1) == "E")] <- "E"
+totacts$Cause <- factor(totacts$Cause)
+table(totacts$Cause)
+
 totactsnd <- totacts[!(duplicated(totacts[, c("INCDTNO", "YEAR", "MONTH", "DAY", "TIMEHR", "TIMEMIN")])),]
 dim(totactsnd)
 
@@ -48,7 +59,9 @@ rownames(xdmg) <- NULL
 
 #############################
 #
-#   Look at causes better
+#   Look at causes better 
+#
+#   DO NOT NEED THIS SECTION
 #
 #############################
 
