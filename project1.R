@@ -3,6 +3,7 @@ setwd("~/School/Fall 2016/SYS 4021/Data/Train Data")
 source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/AccidentInput.R")
 source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/PCAplots.R")
 source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/SPM_Panel.R")
+source("D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/InClass/Train Data/TestSet-1.R")
 path <- "D:/Users/Bae/Documents/School/Fall 2016/SYS 4021/Data/Train Data"
 #Thomas Harrison
 setwd("/Users/ThomasHarrison/Desktop/SYS 4021/Data")
@@ -51,8 +52,8 @@ dim(totactsnd)
 #
 #############################
 
-dmgbox <- boxplot(totacts$ACCDMG)
-xdmg <- totacts[totacts$ACCDMG > dmgbox$stats[5],]
+dmgbox <- boxplot(totactsnd$ACCDMG)
+xdmg <- totactsnd[totactsnd$ACCDMG > dmgbox$stats[5],]
 
 #Not sure if this is necessary
 rownames(xdmg) <- NULL
@@ -98,6 +99,7 @@ table(xdmg$Cause)
 #
 #   Let's determine which response variables correlate with ACCDMG
 # NOT SURE IF THE BELOW IS CORRECT -- I HAVE HAD ISSUES
+#
 #############################
 
 xdmg.lm1<-lm(ACCDMG~.,data=xdmg[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
@@ -109,5 +111,13 @@ xdmg.lm1<-lm(ACCDMG~.,data=xdmg[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
 xdmg.lm1.step<-step(xdmg.lm1, trace = F)
 summary(xdmg.lm1)
 summary(xdmg.lm1.step)
+
+########
+#
+# Look at Cause
+#
+########
+#normal
+barplot(table(totactsnd$TYPE), main = "Accident Type in extreme data", xlab="TYPE", ylab="Frequency")
 
 

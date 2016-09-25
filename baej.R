@@ -12,6 +12,7 @@ boxplot(totactsnd$TIMEMIN)
 #check if ampm is significant (not really)
 table(totactsnd$AMPM)
 #After graphing does not seem like hours/ampm really effects the information
+#Aggregate hours by doing 1-24 schedule
 storeRowAM <- totactsnd[which(totactsnd$AMPM=="AM"),]
 storeRowPM <- totactsnd[which(totactsnd$AMPM=="PM"),]
 storeRowXAM <- xdmg[which(xdmg$AMPM=="AM"),]
@@ -41,3 +42,32 @@ par(mfrow=c(1,1))
 #########
 uva.pairs(totactsnd[,c("ACCDMG", "Casualty", "CARS", "CARSDMG", "CARSHZD")])
 uva.pairs(xdmg[,c("ACCDMG", "Casualty", "CARS", "CARSDMG", "CARSHZD")])
+
+########
+# Evacuate, TEMP, TRNSPD, TONS
+########
+uva.pairs(totactsnd[,c("ACCDMG", "Casualty", "EVACUATE", "TEMP", "TONS")])
+uva.pairs(xdmg[,c("ACCDMG", "Casualty", "EVACUATE", "TEMP", "TONS")])
+
+######
+# Cause hypothesis: Derailment is biggest factor
+######
+
+#Barplot shows that derailment is the most frequent in derailment
+barplot(table(xdmg$TYPE), main = "Accident Type in extreme data", xlab="TYPE", ylab="Frequency")
+#look at cost in derailments
+plot(1:13, tapply(xdmg$ACCDMG, xdmg$TYPE, sum), type = "h", xlab = "Type", ylab = "Total Cost", main = "Total Cost per Type extreme")
+plot(1:13, tapply(xdmg$ACCDMG, xdmg$TYPE, mean), type = "h", xlab = "Type", ylab = "Total Cost", main = "Total Cost per Type extreme")
+#notice that explosions have highest average cost; derailments have a value where it makes cost extremely high
+boxplot(xdmg[which(xdmg$TYPE==1),]$ACCDMG)$stats
+which.max(xdmg[which(xdmg$TYPE==1),]$ACCDMG)
+max(xdmg[which(xdmg$TYPE==1),]$ACCDMG)
+which(xdmg[which(xdmg$TYPE==1),]$ACCDMG==31538754)
+#get 4632, 4633
+xdmg[4632,]$ACCDMG
+xdmg[4633,]$ACCDMG
+sum(xdmg[which(xdmg$TYPE==1),]$ACCDMG)/sum(totacts$ACCDMG)
+
+
+
+
