@@ -52,6 +52,8 @@ uva.pairs(xdmg[,c("ACCDMG", "Casualty", "EVACUATE", "TEMP", "TONS")])
 ######
 # Type hypothesis: Derailment is biggest factor
 ######
+#Make type a factor:
+xdmg$TYPE <- factor(xdmg$TYPE)
 
 #Barplot shows that derailment is the most frequent in derailment
 barplot(table(xdmg$TYPE), main = "Accident Type in extreme data", xlab="TYPE", ylab="Frequency")
@@ -96,22 +98,38 @@ biplot(derail.pca)
 derail$TRKDNSTY
 
 #Multiple linear models
-derail.lm<-lm(ACCDMG~.,data=derail[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS', 'DRUG', 'ALCOHOL')])
+derail.lm<-lm(ACCDMG~.,data=derail[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
 summary(derail.lm)
-nrow(derail[which(derail$DRUG>=1),])
-#we find that trnspd/tons are significant at the 0.01 level and drugs is significant at the 0.05 level; cars is 0.1
+#we find that trnspd at 0.001 level and tons at 0
 #remake lm to test for only these factors
-derail.lm2 <- lm(ACCDMG~., data=derail[,c('ACCDMG','TRNSPD','TONS','CARS','DRUG')])
+derail.lm2 <- lm(ACCDMG~., data=derail[,c('ACCDMG','TRNSPD','TONS')])
 summary(derail.lm2)
-  
+#The Adjusted R^2 is greater for model 2; check AIC: lm2 is less so use this model
+AIC(derail.lm2)<AIC(derail.lm)
+
 #Step models: Have to remove drug because na values
-which(is.na(derail$DRUG))
-derail.lm3 <- lm(ACCDMG~., data=derail[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
-summary(derail.lm3)
 #step model
-derail.lm3.step<-step(derail.lm3, trace=F)
-summary(derail.lm3.step)
+derail.lm2.step<-step(derail.lm2, trace=F)
+summary(derail.lm2.step)
 
 #Partial F test
-anova(derail.lm3.step,derail.lm3)
-#the same thus using step doesn't really help (actually hurts because can't evaluate information from drug attribute)
+anova(derail.lm2.step,derail.lm2)
+#the same thus using step doesn't really help 
+
+#Move on to qualitative view of Type
+
+
+# Choose 1 of your project 1 hypotheses motivated from your Situation 
+# based on an actionable, controllable variable.  Build models with qualitative
+# and quantitative variables to test your hypotheses.  Make sure to address the
+# following steps:
+# 1.  Variable selection for linear models.
+# 2.  Treatment of categorical variables for your linear model.
+# 3.  Measure the performance of the models.
+# 4.  Adjust your models based on analytical and graphical diagnostics.
+# 5.  Reassess models based on adjustments.
+# 6.  Compare your best models.
+# 7.  Use your best model to reject or accept your hypothesis and provide a 
+#     recommendation supported by statistical evidence.
+
+# Turn in your assessment in PDF on Collab under Class Assignment 10.

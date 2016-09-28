@@ -54,7 +54,6 @@ dim(totactsnd)
 
 dmgbox <- boxplot(totactsnd$ACCDMG)
 xdmg <- totactsnd[totactsnd$ACCDMG > dmgbox$stats[5],]
-
 #Not sure if this is necessary
 rownames(xdmg) <- NULL
 
@@ -111,13 +110,3 @@ xdmg.lm1<-lm(ACCDMG~.,data=xdmg[,c('ACCDMG','TEMP','TRNSPD','TONS','CARS')])
 xdmg.lm1.step<-step(xdmg.lm1, trace = F)
 summary(xdmg.lm1)
 summary(xdmg.lm1.step)
-
-########
-#
-# Look at Cause
-#
-########
-#normal
-barplot(table(totactsnd$TYPE), main = "Accident Type in extreme data", xlab="TYPE", ylab="Frequency")
-
-
