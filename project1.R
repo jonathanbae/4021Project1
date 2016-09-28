@@ -24,12 +24,6 @@ comvar <- intersect(colnames(acts[[1]]), colnames(acts[[8]]))
 totacts <- combine.data(acts, comvar)
 dim(totacts)
 
-#############################
-#ZC
-#   Remove duplicates to clean data, create cause variable so no repeaat, create casualty variable
-#
-#############################
-
 ####
 #Create a Casualty variable (TOTINJ+TOTKLD)
 totacts$Casualty <- totacts$TOTKLD + totacts$TOTINJ
@@ -52,11 +46,11 @@ dim(totactsnd)
 #
 #############################
 
-dmgbox <- boxplot(totactsnd$ACCDMG)
-xdmg <- totactsnd[totactsnd$ACCDMG > dmgbox$stats[5],]
+dmgbox <- boxplot(totacts$ACCDMG)
+xdmg <- totacts[totacts$ACCDMG > dmgbox$stats[5],]
 #Not sure if this is necessary
 rownames(xdmg) <- NULL
-
+xdmgnd <- xdmg[!(duplicated(xdmg[, c("INCDTNO", "YEAR", "MONTH", "DAY", "TIMEHR", "TIMEMIN")])),]
 #############################
 #
 #   Look at causes better 
