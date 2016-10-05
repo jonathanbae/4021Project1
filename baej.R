@@ -79,25 +79,19 @@ length(which(xdmgnd$TYPE==10))
 #xdmgnd <- xdmgnd[-5666,]
 #xdmgnd <- xdmgnd[-4802,]
 #even after removing the two outliers no change in information so reset and just remove one of the values thats duplicate
-
-#look at derailment information only because rest of the samples are small for extreme damage
-table(xdmgnd$TYPE)
-Derail <- rep(0, nrow(xdmgnd))
-Derail[which(xdmgnd$TYPE == 1)] <- 1 
-Derail <- as.factor(Derail)
-contrasts(Derail)
-
+##########################################################
+#Find features for ACCDMG
 #Start to build quantitative models
 #PCA model shows same relationships between 
-xdmgnd.pca <- princomp(xdmgnd[,c("CARSDMG","EQPDMG", "TRKDMG","ACCDMG","Casualty", "TOTKLD", "TOTINJ")], cor = T)
-biplot(xdmgnd.pca)
-
-
-#the same thus using step doesn't really help 
-
+xdmgnd.pca <- princomp(xdmgnd[,c("ACCDMG","TRNSPD", "TONS", "CARS", "TIMEHR", "TEMP", "HEADEND1")], cor = T )
+biplot(xdmgnd.pca,main="Accident Damage PCA")
+casu.pca <- princomp(casu[,c("Casualty","TRNSPD", "TONS", "CARS", "TIMEHR", "TEMP","HEADEND1")], cor = T )
+biplot(casu.pca,main="Casualty Damage PCA")
+###########################################################
+################################### ACCDMG
 #Move on to qualitative view of Type
-Derail <- rep(0, nrow(xdmgndnd))
-Derail[which(xdmgndnd$TYPE == 1)] <- 1 
+Derail <- rep(0, nrow(xdmgnd))
+Derail[which(xdmgnd$TYPE == 1)] <- 1 
 Derail <- as.factor(Derail)
 contrasts(Derail)
 
@@ -131,3 +125,40 @@ summary(xdmgnd.lm2.boxcox)
 #Based on the model, we can see that derailments do not increase the severity of accidents because the p-value is 
 #0.12797.  However the interaction between derailments and train speed decreases severity because the coefficient
 #is negative and the p-value is significant for the interaction between derailment and train speed.
+
+##############################################
+###############################################
+#Casualties
+
+Derail <- rep(0, nrow(casu))
+Derail[which(casu$TYPE == 1)] <- 1 
+Derail <- as.factor(Derail)
+contrasts(Derail)
+
+casu.lm<-lm(Casualty~Derail,data=casu)
+summary(casu.lm)
+#There are types that are significant at a p-value <0 
+
+#Continuing analysis with ANCOVA Model
+casu.lm1 <-lm(Casualty~Derail+TEMP + TRNSPD + TIMEHR,data=casu)
+summary(casu.lm1)
+casu.lm2<-lm(Casualty~(Derail+TEMP + TRNSPD + TIMEHR)^2,data=casu)
+summary(casu.lm2)
+#Partial F Test
+anova(casu.lm1,casu.lm2)
+
+#Use the xdmgnd.lm2 model because significant
+summary(casu.lm2)
+library(MASS)
+L<-boxcox(casu.lm2, plotit = F)$x[which.max(boxcox(casu.lm2, plotit = F)$y)] 
+casu.lm2.boxcox<-lm(Casualty^L ~(Derail+TEMP+TRNSPD+TONS+CARS+HEADEND1)^2,data=casu)
+
+par(mfrow=c(2,2))
+plot(casu.lm2, labels.id = NULL)
+par(mfrow=c(1,1))
+
+par(mfrow=c(2,2))
+plot(casu.lm2.boxcox, labels.id = NULL)
+par(mfrow=c(1,1))
+
+summary(casu.lm2)
