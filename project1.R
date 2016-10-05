@@ -51,6 +51,12 @@ xdmg <- totacts[totacts$ACCDMG > dmgbox$stats[5],]
 #Not sure if this is necessary
 rownames(xdmg) <- NULL
 xdmgnd <- xdmg[!(duplicated(xdmg[, c("INCDTNO", "YEAR", "MONTH", "DAY", "TIMEHR", "TIMEMIN")])),]
+
+casu <- which(totacts$Casualty>=1)
+casu <- totacts[casu,]
+casu <- casu[!(duplicated(casu[, c("INCDTNO", "YEAR", "MONTH", "DAY", "TIMEHR", "TIMEMIN")])),]
+
+
 #############################
 #
 #   Look at causes better 
