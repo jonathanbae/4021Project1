@@ -3,6 +3,10 @@
 # Use this code to create data frames and clean data properly
 # NOTE: Works once you have totacts established
 ########
+acts <- file.inputl(path) 
+comvar <- intersect(colnames(acts[[1]]), colnames(acts[[8]]))
+#totacts is the array of all data
+totacts <- combine.data(acts, comvar)
 
 # Define causes for analysis
 totacts$Cause <- rep(NA, nrow(totacts))
@@ -33,3 +37,4 @@ which(xdmgnd$ACCDMG==max(xdmgnd$ACCDMG))
 xdmgnd <- xdmgnd[-5739,]
 xdmgnd <- xdmgnd[-5738,]
 boxplot(xdmgnd$ACCDMG)
+

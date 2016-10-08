@@ -41,9 +41,7 @@ plot(xdmgnd.lm2.boxcox, labels.id = NULL)
 par(mfrow=c(1,1))
 
 summary(xdmgnd.lm2.boxcox)
-#Based on the model, we can see that derailments do not increase the severity of accidents because the p-value is 
-#0.12797.  However the interaction between derailments and train speed decreases severity because the coefficient
-#is negative and the p-value is significant for the interaction between derailment and train speed.
+confint(xdmgnd.lm2.boxcox, 'Derail1', level=0.95)
 
 ##############################################
 ###############################################
@@ -81,3 +79,5 @@ plot(badactsnd.lm2.boxcox, labels.id = NULL)
 par(mfrow=c(1,1))
 
 summary(badactsnd.lm2)
+confint(badactsnd.lm2, 'Derail1', level=0.95)
+
